@@ -21,7 +21,7 @@ env:
 
 jobs:
   printJob:
-    name: Print event
+    name: Generate ALZ Accelerator Test URLs
     runs-on: ubuntu-latest
     steps:
       - name: Get PR Information
@@ -30,7 +30,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         shell: pwsh
         run: |
-          $GH_CONTEXT_PS = Get-Content $GITHUB_CONTEXT | ConvertFrom-Json -Depth 10
+          $GH_CONTEXT_PS = Get-Content Env:$GITHUB_CONTEXT | ConvertFrom-Json -Depth 10
 
           $forkRepoFullName = $GH_CONTEXT_PS.event.pull_request.head.repo.full_name
           $forkOrgName = $forkRepoFullName.Split('/',2)[0]
