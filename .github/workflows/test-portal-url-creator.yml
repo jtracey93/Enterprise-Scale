@@ -30,7 +30,8 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         shell: pwsh
         run: |
-          $GH_CONTEXT_PS = Get-Content Env:$GITHUB_CONTEXT | ConvertFrom-Json -Depth 10
+          echo "${Env:$GITHUB_CONTEXT}" > pr-info.json
+          $GH_CONTEXT_PS = Get-Content pr-info.json | ConvertFrom-Json -Depth 10
 
           $forkRepoFullName = $GH_CONTEXT_PS.event.pull_request.head.repo.full_name
           $forkOrgName = $forkRepoFullName.Split('/',2)[0]
