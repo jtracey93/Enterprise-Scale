@@ -19,7 +19,6 @@ env:
   fairfax_url_pt3: "eslzArm%2Ffairfaxeslz-portal.json"
   url_2f: "%2F"
 
-https://portal.azure.us/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale%2Fmain%2FeslzArm%2FeslzArm.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale%2Fmain%2FeslzArm%2Ffairfaxeslz-portal.json
 jobs:
   printJob:
     name: Print event
