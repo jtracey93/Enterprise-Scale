@@ -33,8 +33,7 @@ jobs:
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module -Name GitHubActions
           Import-Module GitHubActions
-          $context = Get-ActionContext
-          $GH_CONTEXT_PS = Get-Content $context | ConvertFrom-Json -Depth 10
+          $GH_CONTEXT_PS = Get-ActionContext
           $GH_CONTEXT_PS.event.pull_request.head.repo.full_name
 
           # $forkRepoFullName = $GH_CONTEXT_PS.event.pull_request.head.repo.full_name
