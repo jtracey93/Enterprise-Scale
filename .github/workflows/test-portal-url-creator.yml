@@ -30,6 +30,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         shell: pwsh
         run: |
+          Install-Module -Name GitHubActions
           Import-Module GitHubActions
           $context = Get-ActionContext
           $GH_CONTEXT_PS = Get-Content $context | ConvertFrom-Json -Depth 10
