@@ -1,0 +1,30 @@
+name: Create ALZ Portal Test URLs
+
+on:
+  pull_request:
+    types:
+      - opened
+    branches:
+      - main
+    paths:
+      - "eslzArm/**"
+  workflow_dispatch: {}
+
+env:
+  public_url_pt1: "https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2F"
+  public_url_pt2: "%2FeslzArm%2FeslzArm.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2F"
+  public_url_pt3: "eslzArm%2Feslz-portal.json"
+  fairfax_url_pt1: "https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2F"
+  fairfax_url_pt2: "%2FeslzArm%2FeslzArm.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2F"
+  fairfax_url_pt3: "eslzArm%2Feslz-portal.json"
+
+jobs:
+  printJob:
+    name: Print event
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
