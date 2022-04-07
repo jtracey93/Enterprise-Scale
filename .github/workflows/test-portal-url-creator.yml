@@ -30,8 +30,8 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         shell: pwsh
         run: |
-          echo ${{ env:$GITHUB_CONTEXT }}
-          echo ${{ env:$GITHUB_CONTEXT }} > pr-info.json
+          echo "${Env:$GITHUB_CONTEXT}"
+          echo "${Env:$GITHUB_CONTEXT}" > pr-info.json
           Get-Content pr-info.json
           $GH_CONTEXT_PS = Get-Content pr-info.json | ConvertFrom-Json -Depth 10
 
@@ -40,8 +40,8 @@ jobs:
           $forkRepoName = $forkRepoFullName.Split('/',2)[1]
           $forkBranchName = $GH_CONTEXT_PS.event.pull_request.head.ref
 
-          $publicTestUrl = ${env:public_url_pt1} + $forkOrgName + ${env:url_2f} + $forkRepoName + ${env:url_2f} + $forkBranchName + ${env:public_url_pt2} + $forkOrgName + ${env:url_2f} + $forkRepoName + ${env:url_2f} + $forkBranchName + ${env:url_2f} + ${env:public_url_pt3}
-          $fairfaxTestUrl = ${env:fairfax_url_pt1} + $forkOrgName + ${env:url_2f} + $forkRepoName + ${env:url_2f} + $forkBranchName + ${env:fairfax_url_pt2} + $forkOrgName + ${env:url_2f} + $forkRepoName + ${env:url_2f} + $forkBranchName + ${env:url_2f} + ${env:fairfax_url_pt3}
+          $publicTestUrl = "${env:public_url_pt1}" + $forkOrgName + "${env:url_2f}" + $forkRepoName + "${env:url_2f}" + $forkBranchName + "${env:public_url_pt2}" + $forkOrgName + "${env:url_2f}" + $forkRepoName + "${env:url_2f}" + $forkBranchName + "${env:url_2f}" + "${env:public_url_pt3}"
+          $fairfaxTestUrl = "${env:fairfax_url_pt1}" + $forkOrgName + "${env:url_2f}" + $forkRepoName + "${env:url_2f}" + $forkBranchName + "${env:fairfax_url_pt2}" + $forkOrgName + "${env:url_2f}" + $forkRepoName + "${env:url_2f}" + $forkBranchName + "${env:url_2f}" + "${env:fairfax_url_pt3}"
 
           Write-Output "::set-output name=PUBLIC_TEST_URL_OUT::$publicTestUrl"
           Write-Output "::set-output name=FAIRFAX_TEST_URL_OUT::$publicTestUrl"
