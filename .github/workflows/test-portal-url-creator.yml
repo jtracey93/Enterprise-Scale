@@ -30,10 +30,9 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         shell: pwsh
         run: |
-          echo "${Env:$GITHUB_CONTEXT}" > pr-info.json
-          Get-Content pr-info.json
-          $GH_CONTEXT_PS = Get-Content pr-info.json | ConvertFrom-Json -Depth 10
-          $GH_CONTEXT_PS
+          Import-Module GitHubActions
+          $context = Get-ActionContext
+          $GH_CONTEXT_PS = Get-Content $context | ConvertFrom-Json -Depth 10
           $GH_CONTEXT_PS.event.pull_request.head.repo.full_name
 
           # $forkRepoFullName = $GH_CONTEXT_PS.event.pull_request.head.repo.full_name
