@@ -14,17 +14,50 @@ env:
   public_url_pt1: "https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2F"
   public_url_pt2: "%2FeslzArm%2FeslzArm.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2F"
   public_url_pt3: "eslzArm%2Feslz-portal.json"
-  fairfax_url_pt1: "https://portal.azure.com/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2F"
+  fairfax_url_pt1: "https://portal.azure.us/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2F"
   fairfax_url_pt2: "%2FeslzArm%2FeslzArm.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2F"
-  fairfax_url_pt3: "eslzArm%2Feslz-portal.json"
+  fairfax_url_pt3: "eslzArm%2Ffairfaxeslz-portal.json"
+  url_2f: "%2F"
 
+https://portal.azure.us/#blade/Microsoft_Azure_CreateUIDef/CustomDeploymentBlade/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale%2Fmain%2FeslzArm%2FeslzArm.json/uiFormDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2FEnterprise-Scale%2Fmain%2FeslzArm%2Ffairfaxeslz-portal.json
 jobs:
   printJob:
     name: Print event
     runs-on: ubuntu-latest
     steps:
-      - name: Dump GitHub context
+      - name: Get PR Information
+        id: get-pr-info
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
+        shell: pwsh
         run: |
-          echo "$GITHUB_CONTEXT"
+          $GH_CONTEXT_PS = $GITHUB_CONTEXT | ConvertFrom-Json -Depth 10
+
+          $forkRepoFullName = $GH_CONTEXT_PS.event.pull_request.head.repo.full_name
+          $forkOrgName = $forkRepoFullName.Split('/',2)[0]
+          $forkRepoName = $forkRepoFullName.Split('/',2)[1]
+          $forkBranchName = $GH_CONTEXT_PS.event.pull_request.head.ref
+
+          $publicTestUrl = $public_url_pt1 + $forkOrgName + $url_2f + $forkRepoName + $url_2f + $forkBranchName + $public_url_pt2 + $forkOrgName + $url_2f + $forkRepoName + $url_2f + $forkBranchName + $url_2f + $public_url_pt3
+          $fairfaxTestUrl = $fairfax_url_pt1 + $forkOrgName + $url_2f + $forkRepoName + $url_2f + $forkBranchName + $fairfax_url_pt2 + $forkOrgName + $url_2f + $forkRepoName + $url_2f + $forkBranchName + $url_2f + $fairfax_url_pt3
+
+          Write-Output "::set-output name=PUBLIC_TEST_URL_OUT::$publicTestUrl"
+          Write-Output "::set-output name=FAIRFAX_TEST_URL_OUT::$publicTestUrl"
+
+      - name: Comment PR With Public URL
+        uses: actions/github-script@0.3.0
+        if: github.event_name == 'pull_request'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
+            github.issues.createComment({ issue_number, owner, repo, body: 'ALZ Accelerator Public Test URL: ${{ steps.get-pr-info.outputs.PUBLIC_TEST_URL_OUT }}' });
+
+      - name: Comment PR With Fairfax URL
+        uses: actions/github-script@0.3.0
+        if: github.event_name == 'pull_request'
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { issue: { number: issue_number }, repo: { owner, repo }  } = context;
+            github.issues.createComment({ issue_number, owner, repo, body: 'ALZ Accelerator Fairfax Test URL: ${{ steps.get-pr-info.outputs.FAIRFAX_TEST_URL_OUT }}' });
