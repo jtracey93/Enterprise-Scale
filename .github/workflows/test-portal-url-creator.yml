@@ -30,6 +30,7 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         shell: pwsh
         run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module -Name GitHubActions
           Import-Module GitHubActions
           $context = Get-ActionContext
