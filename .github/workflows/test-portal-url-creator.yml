@@ -30,8 +30,8 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         shell: pwsh
         run: |
-          echo ${env:$GITHUB_CONTEXT}
-          echo ${env:$GITHUB_CONTEXT} > pr-info.json
+          echo ${{ env:$GITHUB_CONTEXT }}
+          echo ${{ env:$GITHUB_CONTEXT }} > pr-info.json
           Get-Content pr-info.json
           $GH_CONTEXT_PS = Get-Content pr-info.json | ConvertFrom-Json -Depth 10
 
