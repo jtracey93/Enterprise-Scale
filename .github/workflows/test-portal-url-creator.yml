@@ -31,6 +31,7 @@ jobs:
         shell: pwsh
         run: |
           echo "${Env:$GITHUB_CONTEXT}" > pr-info.json
+          Get-Content pr-info.json
           $GH_CONTEXT_PS = Get-Content pr-info.json | ConvertFrom-Json -Depth 10
 
           $forkRepoFullName = $GH_CONTEXT_PS.event.pull_request.head.repo.full_name
