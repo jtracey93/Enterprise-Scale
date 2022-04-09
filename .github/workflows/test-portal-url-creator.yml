@@ -38,8 +38,8 @@ jobs:
           $publicTestUrl = ${{ env.public_url_pt1 }} + $forkOrgName + ${{ env.url_2f }} + $forkRepoName + ${{ env.url_2f }} + $forkBranchName + ${{ env.public_url_pt2 }} + $forkOrgName + ${{ env.url_2f }} + $forkRepoName + ${{ env.url_2f }} + $forkBranchName + ${{ env.url_2f }} + ${{ env.public_url_pt3 }}
           $fairfaxTestUrl = ${{ env.fairfax_url_pt1 }} + $forkOrgName + ${{ env.url_2f }} + $forkRepoName + ${{ env.url_2f }} + $forkBranchName + ${{ env.fairfax_url_pt2 }}" + $forkOrgName + ${{ env.url_2f }} + $forkRepoName + ${{ env.url_2f }} + $forkBranchName + ${{ env.url_2f }} + ${{ env.fairfax_url_pt3 }}
 
-          Write-Output ::set-output name=PUBLIC_TEST_URL_OUT::$( $publicTestUrl)
-          Write-Output ::set-output name=FAIRFAX_TEST_URL_OUT::$( $fairfaxTestUrl)
+          Write-Output "::set-output name=PUBLIC_TEST_URL_OUT::$($publicTestUrl)"
+          Write-Output "::set-output name=FAIRFAX_TEST_URL_OUT::$($fairfaxTestUrl)"
 
 
       - name: Comment PR With Public Test URL
