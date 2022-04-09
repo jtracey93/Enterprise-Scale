@@ -35,11 +35,15 @@ jobs:
           $forkRepoName = $forkRepoFullName.Split('/',2)[1]
           $forkBranchName = $GH_CONTEXT_PS.pull_request.head.ref
 
-          $publicTestUrl = ${{ env.public_url_pt1 }} + $forkOrgName + ${{ env.url_2f }} + $forkRepoName + ${{ env.url_2f }} + $forkBranchName + ${{ env.public_url_pt2 }} + $forkOrgName + ${{ env.url_2f }} + $forkRepoName + ${{ env.url_2f }} + $forkBranchName + ${{ env.url_2f }} + ${{ env.public_url_pt3 }}
-          $fairfaxTestUrl = ${{ env.fairfax_url_pt1 }} + $forkOrgName + ${{ env.url_2f }} + $forkRepoName + ${{ env.url_2f }} + $forkBranchName + ${{ env.fairfax_url_pt2 }}" + $forkOrgName + ${{ env.url_2f }} + $forkRepoName + ${{ env.url_2f }} + $forkBranchName + ${{ env.url_2f }} + ${{ env.fairfax_url_pt3 }}
+          echo "$forkOrgName"
+          echo "$forkRepoName"
+          echo "$forkBranchName"
 
-          echo ::set-output name=PUBLIC_TEST_URL_OUT::$( $publicTestUrl)
-          echo ::set-output name=FAIRFAX_TEST_URL_OUT::$ ($fairfaxTestUrl)echo ::set-output name=PUBLIC_TEST_URL_OUT::$( $publicTestUrl)
+          # $publicTestUrl = ${{ env.public_url_pt1 }} + $forkOrgName + ${{ env.url_2f }} + $forkRepoName + ${{ env.url_2f }} + $forkBranchName + ${{ env.public_url_pt2 }} + $forkOrgName + ${{ env.url_2f }} + $forkRepoName + ${{ env.url_2f }} + $forkBranchName + ${{ env.url_2f }} + ${{ env.public_url_pt3 }}
+          # $fairfaxTestUrl = ${{ env.fairfax_url_pt1 }} + $forkOrgName + ${{ env.url_2f }} + $forkRepoName + ${{ env.url_2f }} + $forkBranchName + ${{ env.fairfax_url_pt2 }}" + $forkOrgName + ${{ env.url_2f }} + $forkRepoName + ${{ env.url_2f }} + $forkBranchName + ${{ env.url_2f }} + ${{ env.fairfax_url_pt3 }}
+
+          # echo ::set-output name=PUBLIC_TEST_URL_OUT::$( $publicTestUrl)
+          # echo ::set-output name=FAIRFAX_TEST_URL_OUT::$ ($fairfaxTestUrl)echo ::set-output name=PUBLIC_TEST_URL_OUT::$( $publicTestUrl)
           
 
       - name: Comment PR With Public Test URL
